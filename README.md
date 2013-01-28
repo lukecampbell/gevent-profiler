@@ -54,6 +54,25 @@ while True:
     print pow(x, 50000)
 ```
 
+
+To profiler a small section of code using context management (`with`):
+
+```python
+from gevent_profiler import GeventProfiler
+def crunch_numbers(a=1000):
+    retval = 0
+    for i in xrange(a):
+        for j in xrange(a):
+            retval += 1
+def finish():
+    print 'done'
+            
+            
+with GeventProfiler(stats='profiler-stats.txt', summary='profiler-summary.txt'):
+    crunch_numbers()
+    finish()
+```
+
 To profile a Python app from the command line:
 
 ```bash
