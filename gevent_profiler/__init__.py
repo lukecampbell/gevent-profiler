@@ -49,6 +49,21 @@ class _State:
 			first = "%s.%s" % (true_class.__module__, true_class.__name__)
 		return "%s.%s" % (first, self.co_name)
 
+class GeventProfiler(object):
+    def __init__(self, stats='stats.txt', summary='summary.txt', trace=None):
+        self.stats   = stats
+        self.summary = summary
+        self.trace   = trace
+
+    def __enter__(self):
+        set_stats_output(self.stats)
+        set_summary_output(self.summary)
+        set_trace_output(self.trace)
+        attach()
+
+    def __exit__(self, type, value, traceback):
+        detach()
+
 def _modname(path):
     """Return a plausible module name for the path."""
 
